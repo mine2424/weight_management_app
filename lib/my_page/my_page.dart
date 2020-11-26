@@ -25,24 +25,34 @@ class MyPage extends StatelessWidget {
     final notifier = context.watch<MyPageNotifier>();
     final count = context.select((MyPageState state) => state.count);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('日々の体重を追加していくアプリ'),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height - 200,
-                child: Builder(
-                  builder: (BuildContext context) {
-                    final records =
-                        context.select((MyPageState state) => state.record);
-                    return ListView.builder(
-                      itemCount: records.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        print(records);
-                        return Container(
+        appBar: AppBar(
+          title: Text('日々の体重を追加していくアプリ'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: IconButton(
+            icon: const Icon(
+              Icons.add,
+              size: 24,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              notifier.popUpForm();
+            },
+          ),
+        ),
+        body: SingleChildScrollView(
+            child: Center(
+                child: Column(children: [
+          SizedBox(
+              height: MediaQuery.of(context).size.height - 200,
+              child: Builder(builder: (BuildContext context) {
+                final records =
+                    context.select((MyPageState state) => state.record);
+                return ListView.builder(
+                    itemCount: records.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
                           height: 100,
                           margin: EdgeInsets.symmetric(
                             horizontal: 12,
@@ -61,91 +71,63 @@ class MyPage extends StatelessWidget {
                             border: Border.all(color: Colors.black),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
+                          child: Row(children: [
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(left: 12),
+                              width: 100,
+                              child: Text(
+                                records[index]['weight'],
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 30),
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(left: 12),
-                                width: 100,
-                                child: Text(
-                                  records[index]['weight'],
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
-                                ),
-                              ),
-                              Expanded(
+                            ),
+                            Expanded(
                                 child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 4),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 24,
-                                            child: Icon(Icons.calendar_today),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(
-                                            records[index]['day'],
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4),
+                                    child: Row(
                                       children: [
                                         SizedBox(
                                           width: 24,
-                                          child: Icon(Icons.comment),
+                                          child: Icon(Icons.calendar_today),
                                         ),
                                         SizedBox(
                                           width: 8,
                                         ),
                                         Text(
-                                          records[index]['comment'],
+                                          records[index]['day'],
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              Text(
-                '今日の体重を追加しよう',
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.add_circle,
-                  color: Colors.blue,
-                ),
-                onPressed: () {
-                  notifier.popUpForm();
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                                  ),
+                                  Row(children: [
+                                    SizedBox(
+                                      width: 24,
+                                      child: Icon(Icons.comment),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(records[index]['comment'],
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ))
+                                  ])
+                                ]))
+                          ]));
+                    });
+              }))
+        ]))));
   }
 }

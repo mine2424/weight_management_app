@@ -40,7 +40,7 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
         builder: (context) => SimpleDialog(
               title: Text('今日の体重を入力しよう'),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 14, vertical: 24),
+                  const EdgeInsets.symmetric(horizontal: 14, vertical: 24),
               children: [
                 Row(
                   children: [
@@ -57,13 +57,13 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text('Kg'),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -79,7 +79,7 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
                     },
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 InkWell(
@@ -114,6 +114,8 @@ class MyPageNotifier extends StateNotifier<MyPageState> with LocatorMixin {
     };
     //配列を新規作成
     final newRecord = List<Map<String, String>>.from(state.record);
+    //formRecordをfirebaseに送れば今まで通りOK!!!
+    print(formRecord);
     //saveした配列を追加
     newRecord.add(formRecord);
     //stateに保存する
